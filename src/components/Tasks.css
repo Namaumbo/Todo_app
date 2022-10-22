@@ -1,0 +1,14 @@
+.tasks {
+    max-width: 25em;
+}
+
+.add-btn {
+    font-size: 15px;
+    color: green
+}
+.add-btn:hover{
+    cursor: pointer;
+}
+.add-btn:active{
+    color: rgb(129, 243, 129)
+}
