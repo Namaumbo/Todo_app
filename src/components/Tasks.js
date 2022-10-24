@@ -103,8 +103,8 @@ export default function Tasks() {
         
         {todoList.map((item) => {
           return (
-            <div>
-              <Segment color="red"  key={item.head} >
+            <div key={item.head} >
+              <Segment color="red" >
                 <List>
                   <List.Item>
                     <List.Icon name="marker" />
