@@ -8,25 +8,43 @@ import {
   Button,
   Input,
   Dropdown,
-  Rating,
 } from "semantic-ui-react";
 import "./Tasks.css";
 export default function Tasks() {
   const options = [
-  { key: 'edit',  text: <Rating size="mini" maxRating={4} color/>, value:"5"  },
-  { key: 'delete', text: <Rating size="mini" maxRating={4} color/>, value: 'delete' },
-  { key: 'hide',  text: <Rating size="mini" maxRating={4} color/>, value: 'hide' },
-]
+    { key: "high", text: "high", value: "3" },
+    { key: "delete", text: "medium", value: "2" },
+    { key: "hide", text: "low", value: "1" },
+  ];
 
   const [check, setChecked] = useState(false);
   const [complete, setCompleted] = useState(" mark complete");
   const [btnColor, setBtnColor] = useState("orange");
   const [iconName, setIconName] = useState("");
   const [open, setOpen] = useState(false);
- 
+  const [heading, setHeading] = useState("");
+  const [description, setDescription] = useState("");
 
+  const [details, setDetails] = useState({ head: "", descrpt: "" });
+  const [todoList, setTodoList] = useState([]);
+
+  const handleChange = (e) => {
+    setHeading(e.target.value);
+  };
+
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  setTimeout(() => {
+    setDetails({
+      head: heading,
+      descrpt: description,
+    });
+   
+  }, 1000);
   const doneInp = () => {
     setOpen(false);
+    setTodoList((prev) => [...prev, details]);
   };
   const addTask = () => {
     setOpen(true);
@@ -57,9 +75,11 @@ export default function Tasks() {
           <>
             {" "}
             <Segment>
-              <Input fluid />
+              <b style={{ color: "black" }}>Subject</b>
+              <Input onChange={handleChange} fluid />
               <br />
-              <Input fluid />
+              <b style={{ color: "black" }}>Description</b>
+              <Input onChange={handleDescription} fluid />
               <br />
               <Button color="green" compact size="tiny" onClick={doneInp}>
                 Done
@@ -68,7 +88,6 @@ export default function Tasks() {
                 <Button>priority</Button>
                 <Dropdown
                   className="button icon"
-                  floating
                   options={options}
                   trigger={<></>}
                 />
@@ -81,37 +100,46 @@ export default function Tasks() {
       </div>
       <br />
       <div className="tasks">
-        <Segment color="red">
-          <List>
-            <List.Item>
-              <List.Icon name="marker" />
-              <List.Content>
-                <List.Header>
-                  <Checkbox checked={check} label="Design Sign up Flow" />{" "}
-                </List.Header>
-                <List.Description>
-                  By the time expression is finished then sign up flow must be
-                  finish
-                </List.Description>
-                <span
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "5px",
-                  }}
-                >
-                  <Label>
-                    <Icon name="cart arrow down"></Icon>marketing
-                  </Label>
-                  <Label color={btnColor} as="a" size="tiny" onClick={markdone}>
-                    <Icon name={iconName} />
-                    {complete}
-                  </Label>
-                </span>
-              </List.Content>
-            </List.Item>
-          </List>
-        </Segment>
+        
+        {todoList.map((item) => {
+          return (
+            <div>
+              <Segment color="red"  key={item.head} >
+                <List>
+                  <List.Item>
+                    <List.Icon name="marker" />
+                    <List.Content >
+                      <List.Header>
+                        <Checkbox checked={check} label={item.head} />{" "}
+                      </List.Header>
+                      <List.Description>{item.description}</List.Description>
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <Label>
+                          <Icon name="cart arrow down"></Icon>marketing
+                        </Label>
+                        <Label
+                          color={btnColor}
+                          as="a"
+                          size="tiny"
+                          onClick={markdone}
+                        >
+                          <Icon name={iconName} />
+                          {complete}
+                        </Label>
+                      </span>
+                    </List.Content>
+                  </List.Item>
+                </List>
+              </Segment>
+            </div>
+          );
+        })}
       </div>
     </>
   );
