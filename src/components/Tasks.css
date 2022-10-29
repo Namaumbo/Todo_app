@@ -12,3 +12,9 @@
 .add-btn:active{
     color: rgb(129, 243, 129)
 }
+.items{
+    list-style: none;
+    color:black;
+ 
+
+}
