@@ -83,7 +83,7 @@ export default function Tasks() {
     <span style={{color:"black",fontSize:"15px"}}>You have {todoList.length} task to complete to day</span>
       {" "}
       <br />
-      <Icon name="add" color="green" size="tiny" circular link />
+      <Icon name="add" color="green" size="tiny" circular link  onClick={addTask}/>
       <span className="add-btn" onClick={addTask}>
         <b>add task</b>
       </span>
