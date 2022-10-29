@@ -2,29 +2,30 @@ import React, { useState } from "react";
 import {
   Segment,
   List,
-  Label,
+
   Icon,
-  Checkbox,
+ 
   Button,
   Input,
-  Dropdown,
+  Form
 } from "semantic-ui-react";
 import "./Tasks.css";
 export default function Tasks() {
-  const [check, setChecked] = useState(false);
-  const [complete, setCompleted] = useState("mark complete");
-  const [btnColor, setBtnColor] = useState("orange");
-  const [iconName, setIconName] = useState("");
+  // const [check, setChecked] = useState(false);
+  const [complete] = useState("complete");
+  const [btnColor] = useState("orange");
+  // const [iconName] = useState("");
   const [open, setOpen] = useState(false);
   const [heading, setHeading] = useState("");
-  const [description, setDescription] = useState("");
-  // const [details, setDetails] = useState({ head});
+  
   const [todoList, setTodoList] = useState([]);
-  const [remove, setRemove] = useState(false);
+  const [remove] = useState(false);
 
-  function deleteItem(key) {
+  function actionsOnItems(key) {
+   
+  
     var filteredItems = todoList.filter(function (item) {
-      return item.key !== key;
+      return item.key !== key
     });
 
     setTodoList(filteredItems);
@@ -37,13 +38,10 @@ export default function Tasks() {
   //   });
   // }, 1000);
 
-  const doneInp = () => {
-    setOpen(false);
-    // setTodoList((prev) => [...prev, details]);
-  };
+ 
 
   const addTask = () => {
-    setOpen(true);
+    setOpen(true); 
   };
 
   function addItem(e) {
@@ -51,11 +49,18 @@ export default function Tasks() {
       text: heading,
       key: Date.now(),
     };
+
+    if(heading === ""){
+      alert("put a valid task")
+    
+    } 
+    else{
     setTodoList((prevState) => [...prevState, newItem]);
     setHeading("");
     setOpen(false);
 
     e.preventDefault();
+    }
   }
   // const markdone = () => {
   //   setChecked(true);
@@ -75,6 +80,7 @@ export default function Tasks() {
   console.log(todoList);
   return (
     <>
+    <span style={{color:"black",fontSize:"15px"}}>You have {todoList.length} task to complete to day</span>
       {" "}
       <br />
       <Icon name="add" color="green" size="tiny" circular link />
@@ -87,18 +93,23 @@ export default function Tasks() {
           <>
             {" "}
             <Segment>
-              <form onSubmit={addItem}>
+              <Form onSubmit={addItem}>
                 <b style={{ color: "black" }}>Subject</b>
                 <br />
-                <input
+                <Input
                   onChange={(e) => setHeading(e.target.value)}
                   placeholder="enter task"
-                ></input>
-                <br />
-                <Button type="submit" color="green" compact size="tiny">
+                  style={{
+                    marginTop:"0.5em",
+                    marginBottom:"0.5em"
+                  }}
+                />
+                {" "}
+                <br/>
+                <Button type="submit" color="green" compact>
                   add
                 </Button>
-              </form>
+              </Form>
               {/* 
               <br />
               <b style={{ color: "black" }}>Description</b>
@@ -134,9 +145,10 @@ export default function Tasks() {
                       <List.Icon name="marker" />
                       <List.Content>
                         <List.Header>
-                          <Checkbox checked={check} label={item.text} />{" "}
+                        {item.text}
                         </List.Header>
-                        <List.Description>{item.description}</List.Description>
+                        {/* <List.Description>{item.description}</List.Description> */}
+                        
                         <span
                           style={{
                             display: "flex",
@@ -144,17 +156,15 @@ export default function Tasks() {
                             marginTop: "5px",
                           }}
                         >
-                          <Label>
-                            <Icon name="cart arrow down"></Icon>marketing
-                          </Label>
+                          
                           <Button
                             color={btnColor}
                             as="a"
                             size="mini"
-                            onClick={(e) => deleteItem(item.key)}
+                            onClick={(e) => actionsOnItems(item.key)}
                           >
-                            <Icon name={iconName} />
-                            {complete}
+                            {/*  <Icon name={iconName} /> */}
+                            {complete} 
                           </Button>
                         </span>
                       </List.Content>
